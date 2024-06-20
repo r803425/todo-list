@@ -1,3 +1,4 @@
+//[{text: '洗衣服', checked: false}, {text: '寫文案', checked: true}]
 let listState = [];
 
 const STATE_KEY = "todo-list";
@@ -32,7 +33,6 @@ function initList() {
     if (item.checked) {
       li.classList.add("checked");
     }
-
     li.onclick = checkItem;
 
     ul.appendChild(li);
@@ -78,17 +78,17 @@ function checkItem() {
   listState[idx].checked = !listState[idx].checked;
 
   item.classList.toggle("checked");
-
   saveState(listState);
 }
 
-function deleteItem() {
+function deleteItem(e) {
   const item = this.parentNode;
   const parent = item.parentNode;
   const idx = Array.from(parent.childNodes).indexOf(item);
   listState = listState.filter((_, i) => i !== idx);
   parent.removeChild(item);
   saveState(listState);
+  e.stopPropagation();
 }
 
 initList();
